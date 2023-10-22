@@ -33,10 +33,14 @@ const sharedStyles = StyleSheet.create({
   flexFill: {
     flex: 1,
   },
-  scrollContainer: {
+  scroll: {
     flex: 1,
-    alignSelf: "flex-start",
     width: "100%",
+  },
+  scrollContent: {
+    flex: 1,
+    alignItems: "flex-start",
+    gap: 5,
   },
   titleText: {
     fontSize: 32,
