@@ -10,7 +10,10 @@ import SecondView from "./SecondView";
 // See https://reactnavigation.org/docs/typescript/
 export type NavDemoStackRouteParamList = {
   Main: undefined;
-  Second: undefined;
+  Second: {
+    name: string;
+    depth: number;
+  };
 };
 
 // Create the component that will be used to manage this "stack"

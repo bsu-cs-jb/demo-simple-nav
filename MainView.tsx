@@ -12,7 +12,12 @@ export default function MainView({ navigation }: MainViewProps) {
       <SubtitleText>You are inside of Main</SubtitleText>
       <BigButton
         title="Navigate to Second"
-        onPress={() => navigation.navigate("Second")}
+        onPress={() =>
+          navigation.navigate("Second", {
+            name: "Jeremy",
+            depth: 1,
+          })
+        }
       />
     </View>
   );
