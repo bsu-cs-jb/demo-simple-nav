@@ -9,7 +9,6 @@ import {
   Text,
 } from "react-native";
 import { dims } from "./DeviceSettings";
-import { log } from "./utils";
 import { ScaleContext, makeScaleFn } from "./ScaleContext";
 
 export default function IPhone14Device(props: ViewProps) {
@@ -17,6 +16,13 @@ export default function IPhone14Device(props: ViewProps) {
   const scaleStyle = useMemo(() => {
     return makeScaleFn(scale);
   }, [scale]);
+  const scaleContext = useMemo(
+    () => ({
+      scale,
+      scaleStyle,
+    }),
+    [scale, scaleStyle],
+  );
 
   const { width, height } = useWindowDimensions();
   console.log(`Window dimensions: `, { width, height });
@@ -33,10 +39,9 @@ export default function IPhone14Device(props: ViewProps) {
     setScale(scale + 0.1);
   };
   return (
-    <ScaleContext.Provider value={{ scale, scaleStyle }}>
+    <ScaleContext.Provider value={scaleContext}>
       <View style={scaleStyle(styles.deviceShell)}>
         <View style={scaleStyle(styles.deviceScreen)}>{props.children}</View>
-        {/* <View style={scaleStyle(styles.notch, ["height", "top", "width"])} /> */}
         <View style={scaleStyle(styles.notch)} />
         <View style={scaleStyle(styles.bottomBar)} />
         <TouchableHighlight
@@ -44,21 +49,23 @@ export default function IPhone14Device(props: ViewProps) {
           onPress={handleZoomMinus}
           hitSlop={{ left: 5, right: 5 }}
         >
-          <Text>-</Text>
+          <Text style={scaleStyle({ fontSize: 14 })}>-</Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={scaleStyle(styles.zoomText)}
           onPress={handleZoomReset}
           hitSlop={{ left: 5, right: 5 }}
         >
-          <Text>{Math.round(scale * 100)}%</Text>
+          <Text style={scaleStyle({ fontSize: 14 })}>
+            {Math.round(scale * 100)}%
+          </Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={scaleStyle(styles.zoomPlus)}
           onPress={handleZoomPlus}
           hitSlop={{ left: 5, right: 5 }}
         >
-          <Text>+</Text>
+          <Text style={scaleStyle({ fontSize: 14 })}>+</Text>
         </TouchableHighlight>
       </View>
     </ScaleContext.Provider>
@@ -73,6 +80,8 @@ const baseStyles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.3,
   },
 });
 const styles = StyleSheet.create({
