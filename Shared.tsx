@@ -30,7 +30,6 @@ export function CustomStyleText({
 }: CustomStyleTextProps) {
   const { scaleStyle } = useScale();
   const computedStyle = [scaleStyle(customStyle), scaleStyle(style)];
-  // const computedStyle = [customStyle, style];
   if (RENDER_HIGHLIGHT) {
     return (
       <RenderHighlightText style={computedStyle} {...props}>
@@ -179,11 +178,14 @@ interface BigButtonProps extends PressableProps {
 }
 
 export function BigButton({ title, onPress, style, ...props }: BigButtonProps) {
+  const { scaleStyle } = useScale();
   return (
     <Pressable
       style={({ pressed }) => [
         style,
-        pressed ? styles.bigButtonPressed : styles.bigButtonUnpressed,
+        scaleStyle(
+          pressed ? styles.bigButtonPressed : styles.bigButtonUnpressed,
+        ),
       ]}
       onPress={onPress}
       {...props}
