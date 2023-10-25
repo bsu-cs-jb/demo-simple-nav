@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: 34,
     width: 175,
-    backgroundColor: "pink",
+    backgroundColor: "black",
     top: 20,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
