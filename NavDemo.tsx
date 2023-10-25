@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MainView from "./MainView";
 import SecondView from "./SecondView";
+import ThirdView from "./ThirdView";
 
 // This type specifies what route parameters each Screen
 // in our Stack requires. Since we are not using route
@@ -11,6 +12,10 @@ import SecondView from "./SecondView";
 export type NavDemoStackRouteParamList = {
   Main: undefined;
   Second: {
+    name: string;
+    depth: number;
+  };
+  Popup: {
     name: string;
     depth: number;
   };
@@ -26,6 +31,11 @@ export default function NavDemo() {
       <NavDemoStack.Navigator initialRouteName="Main">
         <NavDemoStack.Screen name="Main" component={MainView} />
         <NavDemoStack.Screen name="Second" component={SecondView} />
+        <NavDemoStack.Screen
+          options={{ presentation: "modal" }}
+          name="Popup"
+          component={ThirdView}
+        />
       </NavDemoStack.Navigator>
     </NavigationContainer>
   );

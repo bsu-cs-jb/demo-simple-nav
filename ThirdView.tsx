@@ -4,15 +4,15 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { NavDemoStackRouteParamList } from "./NavDemo";
 import { log } from "./utils";
 
-type SecondViewProps = StackScreenProps<NavDemoStackRouteParamList, "Second">;
-export default function SecondView({ navigation, route }: SecondViewProps) {
+type ThirdViewProps = StackScreenProps<NavDemoStackRouteParamList, "Popup">;
+const ThirdView = ({ navigation, route }: ThirdViewProps) => {
   log(route);
   const name = route.params.name;
   const depth = route.params.depth;
 
   return (
     <View style={styles.second}>
-      <SubtitleText>You are inside of Second</SubtitleText>
+      <SubtitleText>You are inside of Third</SubtitleText>
       <LabelText>
         Hi {name}! Depth: {depth}
       </LabelText>
@@ -30,25 +30,18 @@ export default function SecondView({ navigation, route }: SecondViewProps) {
           })
         }
       />
-      <BigButton
-        title="Pop a modal"
-        onPress={() =>
-          navigation.push("Popup", {
-            name: name,
-            depth: depth + 1,
-          })
-        }
-      />
     </View>
   );
-}
+};
 
 export const styles = StyleSheet.create({
   second: {
     flex: 1,
-    backgroundColor: "#fdd",
+    backgroundColor: "#c0d0d0",
     alignItems: "center",
     paddingHorizontal: 10,
     gap: 8,
   },
 });
+
+export default ThirdView;

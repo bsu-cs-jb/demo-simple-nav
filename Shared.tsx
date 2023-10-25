@@ -14,6 +14,7 @@ import {
   ViewStyle,
 } from "react-native";
 import styles from "./styles";
+import { useScale } from "./ScaleContext";
 
 const RENDER_HIGHLIGHT = false;
 
@@ -27,15 +28,18 @@ export function CustomStyleText({
   style,
   ...props
 }: CustomStyleTextProps) {
+  const { scaleStyle } = useScale();
+  const computedStyle = [scaleStyle(customStyle), scaleStyle(style)];
+  // const computedStyle = [customStyle, style];
   if (RENDER_HIGHLIGHT) {
     return (
-      <RenderHighlightText style={[customStyle, style]} {...props}>
+      <RenderHighlightText style={computedStyle} {...props}>
         {children}
       </RenderHighlightText>
     );
   } else {
     return (
-      <Text style={[customStyle, style]} {...props}>
+      <Text style={computedStyle} {...props}>
         {children}
       </Text>
     );
@@ -67,17 +71,10 @@ export function FlexFill() {
   return <View style={styles.flexFill} />;
 }
 
-export function LctHorzContainer({
-  children,
-  style,
-  ...props
-}: ViewProps) {
+export function LctHorzContainer({ children, style, ...props }: ViewProps) {
   if (RENDER_HIGHLIGHT) {
     return (
-      <RenderHighlightView
-        style={[style, styles.horzContainer]}
-        {...props}
-      >
+      <RenderHighlightView style={[style, styles.horzContainer]} {...props}>
         {children}
       </RenderHighlightView>
     );
@@ -158,11 +155,7 @@ function useRenderHighlight(delay: number = 750) {
   return highlight;
 }
 
-export function RenderHighlightView({
-  children,
-  style,
-  ...props
-}: ViewProps) {
+export function RenderHighlightView({ children, style, ...props }: ViewProps) {
   const highlight = useRenderHighlight();
   return (
     <View style={[style, highlight]} {...props}>
@@ -171,11 +164,7 @@ export function RenderHighlightView({
   );
 }
 
-export function RenderHighlightText({
-  children,
-  style,
-  ...props
-}: TextProps) {
+export function RenderHighlightText({ children, style, ...props }: TextProps) {
   const highlight = useRenderHighlight();
   return (
     <Text style={[style, highlight]} {...props}>
@@ -189,12 +178,7 @@ interface BigButtonProps extends PressableProps {
   style?: ViewStyle;
 }
 
-export function BigButton({
-  title,
-  onPress,
-  style,
-  ...props
-}: BigButtonProps) {
+export function BigButton({ title, onPress, style, ...props }: BigButtonProps) {
   return (
     <Pressable
       style={({ pressed }) => [
